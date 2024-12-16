@@ -1,4 +1,5 @@
 import ContactForm from "./ContactForm";
+import { Analytics } from "@vercel/analytics/react"
 
 const ComingSoonPage = () => {
 
@@ -37,6 +38,7 @@ const ComingSoonPage = () => {
           <p>&copy; 2024 Sasha Decor. All Rights Reserved.</p>
         </div>
       </footer>
+      <Analytics/>
     </div>
   );
 };
