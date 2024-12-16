@@ -2,16 +2,24 @@ import axios from "axios";
 import { useState } from "react";
 
 
+
 const ContactForm = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
     const [message, setMessage] = useState("");
 
+
+    const ids = {
+        service: import.meta.env.VITE_SERVICE_ID,
+        template: import.meta.env.VITE_TEMPLATE_ID,
+        user: import.meta.env.VITE_USER_ID,
+    };
+
     const data = {
-        service_id: "service_m2bb2xg",
-        template_id: "template_iqp23t5",
-        user_id: "3WtCVmYtUjAWO49ut",
+        service_id: ids.service,
+        template_id: ids.template,
+        user_id: ids.user,
         template_params: {
             from_name: name,
             to_name: "Saqib",
