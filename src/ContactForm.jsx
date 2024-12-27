@@ -59,6 +59,7 @@ const ContactForm = () => {
         axios
             .post("https://api.emailjs.com/api/v1.0/email/send", data)
             .then((res) => {
+                toast.success("Sent Successfully");
                 console.log("Success - ", res.data);
                 setName("");
                 setEmail("");
