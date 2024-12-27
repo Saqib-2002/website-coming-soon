@@ -31,12 +31,14 @@ const ContactForm = () => {
 
     const [successMsg, setSuccessMsg] = useState(false);
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
 
 
     const sendEmail = (e) => {
         e.preventDefault();
 
+        if (!name.length) {
+            return toast.error("Enter Name");
+        }
         if (name.length < 3) {
             return toast.error("Enter Fullname");
         }
@@ -49,10 +51,6 @@ const ContactForm = () => {
         if (!number.length) {
             return toast.error("Enter Phone Number");
         }
-        if (!phoneRegex.test(number)) {
-            return toast.error("Invalid Phone Number");
-        }
-
         if (!message.length) {
             return toast.error("Enter your Message");
         }
@@ -95,8 +93,9 @@ const ContactForm = () => {
                 />
                 <div className="relative">
                     <input
-                        type="number"
-                        placeholder="Phone Number"
+                        type="tel"
+                        maxLength={14}
+                        placeholder="(+Country Code) Phone Number"
                         value={number}
                         onChange={(e) => setNumber(e.target.value)}
                         className="w-full px-4 py-2 bg-zinc-700 text-pink-50 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
