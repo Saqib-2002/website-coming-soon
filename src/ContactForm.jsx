@@ -54,7 +54,7 @@ const ContactForm = () => {
         }
 
         if (!message.length) {
-            toast.error("Enter your Message");
+            return toast.error("Enter your Message");
         }
         axios
             .post("https://api.emailjs.com/api/v1.0/email/send", data)
