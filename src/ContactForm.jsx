@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-
+import { Toaster, toast } from "react-hot-toast"
 
 
 const ContactForm = () => {
@@ -30,10 +30,32 @@ const ContactForm = () => {
     };
 
     const [successMsg, setSuccessMsg] = useState(false);
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
+
 
     const sendEmail = (e) => {
         e.preventDefault();
 
+        if (name.length < 3) {
+            return toast.error("Enter Fullname");
+        }
+        if (!email.length) {
+            return toast.error("Enter Email");
+        }
+        if (!emailRegex.test(email)) {
+            return toast.error("Email is not valid");
+        }
+        if (!number.length) {
+            return toast.error("Enter Phone Number");
+        }
+        if (!phoneRegex.test(number)) {
+            return toast.error("Invalid Phone Number");
+        }
+
+        if (!message.length) {
+            toast.error("Enter your Message");
+        }
         axios
             .post("https://api.emailjs.com/api/v1.0/email/send", data)
             .then((res) => {
@@ -49,10 +71,9 @@ const ContactForm = () => {
             });
     };
 
-
-
     return (
         <>
+
             {successMsg && <div className="text-center text-green-400 font-semibold">
                 Thank you! We&apos;ll get back to you soon.
             </div>}
@@ -62,7 +83,6 @@ const ContactForm = () => {
                     placeholder="Full Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    required
                     className="w-full px-4 py-2 bg-zinc-700 text-pink-50 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
                 />
                 <input
@@ -70,12 +90,11 @@ const ContactForm = () => {
                     placeholder="Email Address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
                     className="w-full px-4 py-2 bg-zinc-700 text-pink-50 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
                 />
                 <div className="relative">
                     <input
-                        type="tel"
+                        type="number"
                         placeholder="Phone Number"
                         value={number}
                         onChange={(e) => setNumber(e.target.value)}
@@ -96,8 +115,14 @@ const ContactForm = () => {
                 >
                     Send Message
                 </button>
+                <Toaster toastOptions={{
+                    style: {
+                        backgroundColor: "#3f3f46",
+                        color: "#eeeeee",
+                    }
+                }} />
             </form>
         </>
     )
 }
-export default ContactForm
+export default ContactForm;
